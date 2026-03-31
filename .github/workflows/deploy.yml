@@ -40,13 +40,11 @@ jobs:
           npm install
           npm run build
 
-      - name: Setup Pages 🛠️
-        uses: actions/configure-pages@v4
-
       - name: Upload artifact 📤
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Ensure this matches your Vite output folder
+          # Vite outputs to 'dist' by default
+          path: './dist'
 
   deploy:
     environment:
