@@ -1,0 +1,39 @@
+name: Deploy Career Tracker
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - '_jobs/**'
+      - 'public/**'
+      - 'package.json'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ⚙️
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # Vite uses 'dist', change to 'build' if using Create React App
+          branch: gh-pages # This is the branch where the site will be hosted
